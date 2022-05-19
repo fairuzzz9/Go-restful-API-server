@@ -7,25 +7,11 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog"
 	"github.com/ziflex/lecho"
-	"gitlab.com/pos_malaysia/golib/database"
 	"gitlab.com/pos_malaysia/golib/logs"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4/middleware"
 )
-
-var sqlStatements = map[string]string{
-	// SQL Name : SQL statement
-	// ok to have duplicate SQL statements, but not ok to have duplicate SQL names
-	// Using map ensure that no duplicate keys. The compiler will stop if there's any duplicate in map literal
-
-	//"GetAllFromTable": "SELECT * FROM SOMETABLE",
-
-}
-
-func init() {
-	database.InitSQLStatements(sqlStatements)
-}
 
 type CustomValidator struct {
 	validator *validator.Validate
