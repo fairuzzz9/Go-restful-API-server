@@ -15,8 +15,7 @@ var echoPortNumber = "1234"
 
 func main() {
 
-	// setup Echo to use our golib/logs
-	e, logger := setupEcho()
+	e := setupEcho()
 
 	// Initialize and pass the zero logger to the routes.
 	routes.InitRoutes(e)
@@ -24,7 +23,7 @@ func main() {
 	// Start server by spinning a goroutine so that it will become non-blocking
 	go func() {
 		if err := e.Start(":" + echoPortNumber); err != nil && err != http.ErrServerClosed {
-			logger.Fatal().Msg("shutting down the server")
+			logs.Fatal().Msg("shutting down the server")
 		}
 	}()
 
@@ -34,7 +33,7 @@ func main() {
 
 		logs.Close()
 		e.Shutdown(ctx)
-		logger.Info().Msg("Echo server shutdown")
+		logs.Info().Msg("Echo server shutdown")
 
-	}, 10*time.Second))
+	}, time.Duration(10)*time.Second))
 }
