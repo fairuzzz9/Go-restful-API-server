@@ -59,6 +59,6 @@ func TestGracefulAndStopWaitWrapper(t *testing.T) {
 
 		t.Log("server shutdown.")
 
-	}, 10*time.Second)) //timeout in 10 seconds.
+	}, time.Duration(10)*time.Second)) //timeout in 10 seconds.
 
 }

@@ -1,0 +1,14 @@
+version: "3.1"
+services:
+  localstack:
+    image: localstack/localstack-full:latest
+    environment:
+      - AWS_DEFAULT_REGION=ap-southeast-1
+      - EDGE_PORT=4566
+      - SERVICES=apigateway,apigatewayv2,lambda,secretsmanager
+    container_name: "localstack"
+    network_mode: bridge
+    ports:
+      - "4566:4566"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"

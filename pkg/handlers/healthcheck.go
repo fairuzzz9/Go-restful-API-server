@@ -8,6 +8,15 @@ import (
 )
 
 // For application healthcheck purpose. DO NOT MODIFY OR REMOVE THIS!
+
+// HealthCheck godoc
+// @Summary Show the status of server.
+// @Description get the status of server.
+// @Tags root
+// @Accept */*
+// @Produce json
+// @Success 200 { Message: "I'm ok" }
+// @Router / [get]
 func HealthCheck(c echo.Context) error {
 
 	requestID := c.Response().Header().Get(echo.HeaderXRequestID)

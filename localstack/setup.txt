@@ -1,0 +1,15 @@
+1. Run 
+    > docker-compose up
+
+
+2. Configure awscli first if you haven't done so.
+
+3. To create a new record in localstack Secrets Manager. Example : 
+
+    >aws --region=ap-southeast-1 --endpoint-url=http://localhost:4566 secretsmanager create-secret --name prod/USC/test --secret-string '{"client_id":"628efb01d9b08800b9b6fa9c","client_secret":"ESusZN2EGwhcdn+RbSJiO3QBCIvshk+KUYbPxH5yh1A="}'
+
+
+4. To delete a record in localstack Secrets Manager. Example :
+
+    >aws --region=ap-southeast-1 --endpoint-url=http://localhost:4566 secretsmanager delete-secret --secret-id prod/USC/test
+

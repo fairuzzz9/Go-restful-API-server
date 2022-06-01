@@ -1,7 +1,6 @@
-# Go REST APP Skeleton
+# Track and Trace backend
 
-**Go REST APP Skeleton** is a template Golang program that serves as the basic building blocks for building future REST APP servers in POS Malaysia. 
-
+**Track and Trace** is the backend portion of the Tracking Page UI. It will reside at AWS and invoke through AWS API Gateway.
 
 # Contact
 
