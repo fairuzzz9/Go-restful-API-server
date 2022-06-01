@@ -51,7 +51,7 @@ func main() {
 		redisClient.Close()
 		logs.Close()
 		e.Shutdown(ctx)
-		logs.Info().Msg("Track N Trace server shutdown")
+		logs.Info().Msg("Track And Trace API server shutdown")
 
 	}, time.Duration(10)*time.Second))
 }
