@@ -43,7 +43,7 @@ func main() {
 
 		logs.Close()
 		e.Shutdown(ctx)
-		logs.Info().Msg("Track And Trace API server shutdown")
+		logs.Info().Msg("Go Rest Skeleton Rest APP server shutdown")
 
 	}, time.Duration(10)*time.Second))
 }
