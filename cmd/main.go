@@ -13,6 +13,15 @@ import (
 
 var echoPortNumber = "1234"
 
+// @title Go Rest Skeleton Rest APP
+// @version 1.0
+// @description This is the Go Skeleton Rest APP
+
+// @contact.name Go Skeleton Rest APP Developer
+// @contact.email boojiun@pos.com.my
+
+// @host localhost:1234
+// @BasePath /
 func main() {
 
 	e := setupEcho()

@@ -1,0 +1,32 @@
+basePath: /
+definitions:
+  models.Message:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:1234
+info:
+  contact:
+    email: boojiun@pos.com.my
+    name: Go Skeleton Rest APP Developer
+  description: This is the Go Skeleton Rest APP
+  title: Go Rest Skeleton Rest APP
+  version: "1.0"
+paths:
+  /healthcheck:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Message'
+      summary: Show the status of server.
+      tags:
+      - root
+swagger: "2.0"
