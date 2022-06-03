@@ -24,6 +24,7 @@ var echoPortNumber = "1234"
 // @BasePath /
 func main() {
 
+	// setup Echo to use our golib/logs
 	e := setupEcho()
 
 	// Initialize and pass the zero logger to the routes.
