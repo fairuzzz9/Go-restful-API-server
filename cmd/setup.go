@@ -46,6 +46,7 @@ func setupEcho() *echo.Echo {
 	// log every request
 	e.Use(middleware.Logger())
 	e.Use(middleware.RequestID())
+	e.Use(middleware.CORS())
 
 	return e
 }
