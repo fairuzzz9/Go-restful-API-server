@@ -36,7 +36,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Message"
+                            "$ref": "#/definitions/models.StandardJSONResponse"
                         }
                     }
                 }
@@ -44,10 +44,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "models.Message": {
+        "models.StandardJSONResponse": {
             "type": "object",
             "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
                 "message": {
+                    "type": "string"
+                },
+                "request_id": {
                     "type": "string"
                 }
             }

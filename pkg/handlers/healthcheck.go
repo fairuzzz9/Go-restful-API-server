@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"go-skeleton-rest-app/internal/models"
+	"go-skeleton-rest-app/pkg/http/responses"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -16,7 +17,7 @@ import (
 // @Tags root
 // @Accept */*
 // @Produce json
-// @Success 200 {object} models.Message
+// @Success 200 {object} models.StandardJSONResponse
 // @Router /healthcheck [get]
 func HealthCheck(c echo.Context) error {
 
@@ -28,7 +29,8 @@ func HealthCheck(c echo.Context) error {
 
 	logs.Info().Str("request ID", requestID).Str("handler", "HealthCheck").Send()
 
-	var reply models.Message
+	var reply models.StandardJSONResponse
+	reply.Code = responses.SuccessCode
 	reply.Message = "I'm ok"
 
 	return c.JSON(http.StatusOK, reply)

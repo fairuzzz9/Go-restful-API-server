@@ -29,7 +29,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Message"
+                            "$ref": "#/definitions/models.StandardJSONResponse"
                         }
                     }
                 }
@@ -37,10 +37,17 @@
         }
     },
     "definitions": {
-        "models.Message": {
+        "models.StandardJSONResponse": {
             "type": "object",
             "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {},
                 "message": {
+                    "type": "string"
+                },
+                "request_id": {
                     "type": "string"
                 }
             }

@@ -1,8 +1,13 @@
 basePath: /
 definitions:
-  models.Message:
+  models.StandardJSONResponse:
     properties:
+      code:
+        type: integer
+      data: {}
       message:
+        type: string
+      request_id:
         type: string
     type: object
 host: localhost:1234
@@ -25,7 +30,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Message'
+            $ref: '#/definitions/models.StandardJSONResponse'
       summary: Show the status of server.
       tags:
       - root
