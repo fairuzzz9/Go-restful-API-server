@@ -5,6 +5,7 @@ import (
 	"go-skeleton-rest-app/pkg/http/responses"
 	"net/http"
 
+	"github.com/labstack/echo/v4"
 	"gitlab.com/pos_malaysia/golib/logs"
 )
 
