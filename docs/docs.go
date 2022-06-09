@@ -47,14 +47,17 @@ const docTemplate = `{
         "models.StandardJSONResponse": {
             "type": "object",
             "properties": {
+                "client_request_id": {
+                    "type": "string"
+                },
                 "code": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "data": {},
                 "message": {
                     "type": "string"
                 },
-                "request_id": {
+                "server_trace_id": {
                     "type": "string"
                 }
             }

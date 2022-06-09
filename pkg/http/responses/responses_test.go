@@ -2,12 +2,13 @@ package responses
 
 import (
 	"encoding/json"
+	"go-skeleton-rest-app/internal/models"
 	"testing"
 )
 
 type getReponseMessageByCodeTestCase struct {
 	name          string
-	input         int
+	input         string
 	expectedJSON  string
 	expectedError string
 }
@@ -19,26 +20,26 @@ type getReponseMessageByCodeTestCase struct {
 //{name: "test json unmarshal error", input: 666666, expectedJSON: `null`, expectedError: "invalid character 'w' looking for beginning of value"},
 
 var getReponseMessageByCodeTestCases = []getReponseMessageByCodeTestCase{
-	{name: `test negative one`, input: -1, expectedJSON: `null`, expectedError: `invalid code`},
-	{name: `test negative ten`, input: -10, expectedJSON: `null`, expectedError: `invalid code`},
-	{name: `test success code`, input: 0, expectedJSON: `{"code":0,"message":"success","data":null}`, expectedError: ``},
-	{name: `test database error code`, input: 1000, expectedJSON: `{"code":1000,"message":"db error","data":null}`, expectedError: ``},
-	{name: `test no such code`, input: 9999, expectedJSON: `null`, expectedError: `invalid code`},
+	{name: `test negative one`, input: "-1", expectedJSON: `null`, expectedError: `invalid code`},
+	{name: `test negative ten`, input: "-10", expectedJSON: `null`, expectedError: `invalid code`},
+	{name: `test success code`, input: "S0000", expectedJSON: `{"code":"S0000","message":"success","client_request_id":"","server_trace_id":"","data":null}`, expectedError: ``},
+	{name: `test database error code`, input: "E1000", expectedJSON: `{"code":"E1000","message":"db error","client_request_id":"","server_trace_id":"","data":null}`, expectedError: ``},
+	{name: `test no such code`, input: "9999", expectedJSON: `null`, expectedError: `invalid code`},
 }
 
 const (
-	TestSuccessCode            = 0
-	TestDBErrorCode            = 1000
-	TestJSONUnMarshalErrorCode = 2000
+	TestSuccessCode            = "S0000"
+	TestDBErrorCode            = "E1000"
+	TestJSONUnMarshalErrorCode = "E2000"
 )
 
-var testResponseMessages = map[int]string{
+var testResponseMessages = map[string]string{
 	TestSuccessCode:            "success",
 	TestDBErrorCode:            "db error",
 	TestJSONUnMarshalErrorCode: "json marshal error",
 }
 
-func assertGetReponseMessageByCode(t *testing.T, input int, expectedJSON, expectedError string) {
+func assertGetReponseMessageByCode(t *testing.T, input string, expectedJSON, expectedError string) {
 	actual, actualError := GetReponseMessageByCode(input)
 
 	actualTemp, _ := json.Marshal(actual)
@@ -61,7 +62,7 @@ func assertGetReponseMessageByCode(t *testing.T, input int, expectedJSON, expect
 func setupTestResponseMessages() func(tb testing.TB) {
 
 	for code, message := range testResponseMessages {
-		if responseData, err := json.Marshal(&JSONResponse{Code: code, Message: message}); err != nil {
+		if responseData, err := json.Marshal(&models.StandardJSONResponse{Code: code, Message: message}); err != nil {
 			panic(err)
 		} else {
 			// load into map

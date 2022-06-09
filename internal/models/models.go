@@ -2,9 +2,10 @@ package models
 
 type (
 	StandardJSONResponse struct {
-		Code      int         `json:"code"`
-		Message   string      `json:"message"`
-		RequestID string      `json:"request_id"`
-		Data      interface{} `json:"data"`
+		Code            string      `json:"code"`
+		Message         string      `json:"message"`
+		ClientRequestID string      `json:"client_request_id"`
+		ServerTraceID   string      `json:"server_trace_id"`
+		Data            interface{} `json:"data"`
 	}
 )

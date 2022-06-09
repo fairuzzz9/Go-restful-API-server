@@ -3,20 +3,15 @@ package responses
 import (
 	"encoding/json"
 	"errors"
+	"go-skeleton-rest-app/internal/models"
 	"sync"
 )
 
-type JSONResponse struct {
-	Code    int         `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
-}
-
 const (
-	SuccessCode = 0
+	SuccessCode = "S0000"
 )
 
-var responseMessages = map[int]string{
+var responseMessages = map[string]string{
 	SuccessCode: "success",
 }
 
@@ -24,7 +19,7 @@ var responseMap = &sync.Map{}
 
 func init() {
 	for code, message := range responseMessages {
-		if responseData, err := json.Marshal(&JSONResponse{Code: code, Message: message}); err != nil {
+		if responseData, err := json.Marshal(&models.StandardJSONResponse{Code: code, Message: message}); err != nil {
 			panic(err)
 		} else {
 			// load into map
@@ -33,13 +28,13 @@ func init() {
 	}
 }
 
-// GetReponseMessageByCode returns a JSONResponse struct with the associated message from the input code.
+// GetReponseMessageByCode returns a StandardJSONResponse struct with the associated message from the input code.
 //
 // If the input code is not available in the responseMessages map, then GetReponseMessageByCode returns nil with "invalid code" error.
-func GetReponseMessageByCode(code int) (*JSONResponse, error) {
+func GetReponseMessageByCode(code string) (*models.StandardJSONResponse, error) {
 
 	if responseData, ok := responseMap.Load(code); ok {
-		result := &JSONResponse{}
+		result := &models.StandardJSONResponse{}
 		if err := json.Unmarshal(responseData.([]byte), result); err != nil {
 			return nil, err
 		}

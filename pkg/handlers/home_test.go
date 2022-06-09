@@ -10,9 +10,12 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func TestRequestID(t *testing.T) {
+func TestServerRequestID(t *testing.T) {
+
+	testServerRequestID := "<test-home-server-request-id>"
+
 	request := httptest.NewRequest(http.MethodGet, "/", nil)
-	request.Header.Add(echo.HeaderXRequestID, "<test-home-request-id>")
+	request.Header.Add(echo.HeaderXRequestID, testServerRequestID)
 
 	recorder := httptest.NewRecorder()
 
@@ -33,8 +36,12 @@ func TestRequestID(t *testing.T) {
 	h := rid(handler)
 	h(echoContext)
 
-	requestID := recorder.Header().Get(echo.HeaderXRequestID)
-	t.Log(requestID)
+	serverRequestID := recorder.Header().Get(echo.HeaderXRequestID)
+	t.Log(serverRequestID)
+
+	if serverRequestID == "" {
+		t.Errorf("expected %s, but got %s", testServerRequestID, serverRequestID)
+	}
 
 }
 

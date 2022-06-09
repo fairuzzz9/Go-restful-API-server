@@ -9,13 +9,13 @@ import (
 
 func Home(c echo.Context) error {
 
-	requestID := c.Response().Header().Get(echo.HeaderXRequestID)
+	serverTraceID := c.Response().Header().Get(echo.HeaderXRequestID)
 
 	// uncomment these lines to pass context to child function
 	//ctx := c.Request().Context()
-	//ctx = contextkeys.SetContextValue(ctx, contextkeys.CONTEXT_KEY_REQUEST_ID, requestID)
+	//ctx = contextkeys.SetContextValue(ctx, contextkeys.CONTEXT_KEY_SERVER_TRACE_ID, serverTraceID)
 
-	logs.Info().Str("request ID", requestID).Str("handler", "Home").Send()
+	logs.Info().Str("server request ID", serverTraceID).Str("handler", "Home").Send()
 
 	return c.HTML(http.StatusOK, "<h1>home</h1>")
 }
