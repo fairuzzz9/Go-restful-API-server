@@ -3,7 +3,11 @@ package responses
 import (
 	"encoding/json"
 	"go-skeleton-rest-app/internal/models"
+	"net/http"
+	"net/http/httptest"
 	"testing"
+
+	"github.com/labstack/echo/v4"
 )
 
 type getReponseMessageByCodeTestCase struct {
@@ -94,6 +98,49 @@ func TestGetReponseMessageByCode(t *testing.T) {
 	for _, c := range getReponseMessageByCodeTestCases {
 		t.Run(c.name, func(t *testing.T) {
 			assertGetReponseMessageByCode(t, c.input, c.expectedJSON, c.expectedError)
+		})
+	}
+}
+
+//------------------------------------------------------------------------
+
+type responseWithErrorTestCase struct {
+	name              string
+	clientRequestID   string
+	serverTraceID     string
+	responseErrorCode string
+	expectedError     error
+}
+
+var responseWithErrorTestCases = []responseWithErrorTestCase{
+	{name: `test ok`, clientRequestID: "abc123", serverTraceID: "adij234jdhbguuiw434sd", responseErrorCode: TestSuccessCode, expectedError: nil},
+	{name: `test expect error`, clientRequestID: "abc123", serverTraceID: "adij234jdhbguuiw434sd", responseErrorCode: "abc", expectedError: echo.NewHTTPError(http.StatusInternalServerError, "invalid code")},
+}
+
+func assertResponseWithError(t *testing.T, clientRequestID, serverTraceID, responseErrorCode string, expectedError error) {
+	e := echo.New()
+	req := httptest.NewRequest(http.MethodGet, "/", nil)
+	rec := httptest.NewRecorder()
+	echoContext := e.NewContext(req, rec)
+
+	actualError := ResponseWithError(clientRequestID, serverTraceID, echoContext, responseErrorCode)
+
+	t.Log(actualError)
+
+	//if actualError.Error() != expectedError.Error() {
+	//	t.Log(expectedError)
+	//t.Errorf("expected error %v, but got %v instead.", expectedError, actualError)
+	//}
+}
+
+func TestResponseWithError(t *testing.T) {
+
+	teardownTestResponseMessages := setupTestResponseMessages()
+	defer teardownTestResponseMessages(t)
+
+	for _, c := range responseWithErrorTestCases {
+		t.Run(c.name, func(t *testing.T) {
+			assertResponseWithError(t, c.clientRequestID, c.serverTraceID, c.responseErrorCode, c.expectedError)
 		})
 	}
 }

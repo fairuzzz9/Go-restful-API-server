@@ -4,7 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"go-skeleton-rest-app/internal/models"
+	"net/http"
 	"sync"
+
+	"github.com/labstack/echo/v4"
+	"gitlab.com/pos_malaysia/golib/logs"
 )
 
 const (
@@ -41,4 +45,19 @@ func GetReponseMessageByCode(code string) (*models.StandardJSONResponse, error) 
 		return result, nil
 	}
 	return nil, errors.New("invalid code")
+}
+
+// ResponseWithError returns a HTTP status 400 together with associated error code, client request ID and server trace ID
+func ResponseWithError(clientRequestID, serverTraceID string, c echo.Context, responseErrorCode string) error {
+	reply, err := GetReponseMessageByCode(responseErrorCode)
+
+	if err != nil {
+		logs.Error().Err(err).Caller().Send()
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+
+	reply.ClientRequestID = clientRequestID
+	reply.ServerTraceID = serverTraceID
+
+	return c.JSON(http.StatusBadRequest, reply)
 }
