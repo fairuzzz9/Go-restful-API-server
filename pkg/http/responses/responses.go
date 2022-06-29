@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	ClientRequestID = "P-Request-ID"
+	ClientRequestID = "P-Request-Id"
 )
 
 const (
@@ -58,7 +58,7 @@ func ResponseWithError(pRequestID, serverTraceID string, c echo.Context, respons
 	reply, err := GetReponseMessageByCode(responseErrorCode)
 
 	if err != nil {
-		logs.Error().Err(err).Caller().Msg("P-Request-ID : " + pRequestID + " server trace ID : " + serverTraceID)
+		logs.Error().Err(err).Caller().Msg("P-Request-Id : " + pRequestID + " server trace ID : " + serverTraceID)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
