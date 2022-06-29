@@ -12,9 +12,8 @@ import (
 
 // define your URL path here
 const (
-	PATH_HOME            = "/"
-	PATH_HEALTH_CHECK    = "/healthcheck"
-	PATH_TRACK_AND_TRACE = "/trackandtracedetails"
+	PATH_HOME         = "/"
+	PATH_HEALTH_CHECK = "/healthcheck"
 )
 
 func InitRoutes(e *echo.Echo) {

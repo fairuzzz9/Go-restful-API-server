@@ -12,11 +12,17 @@ import (
 )
 
 const (
-	SuccessCode = "S0000"
+	ClientRequestID = "P-Request-ID"
+)
+
+const (
+	SuccessCode     = "S0000"
+	SystemErrorCode = "E1001"
 )
 
 var responseMessages = map[string]string{
-	SuccessCode: "success",
+	SuccessCode:     "Success",
+	SystemErrorCode: "System Error",
 }
 
 var responseMap = &sync.Map{}
@@ -48,16 +54,15 @@ func GetReponseMessageByCode(code string) (*models.StandardJSONResponse, error) 
 }
 
 // ResponseWithError returns a HTTP status 400 together with associated error code, client request ID and server trace ID
-func ResponseWithError(clientRequestID, serverTraceID string, c echo.Context, responseErrorCode string) error {
+func ResponseWithError(pRequestID, serverTraceID string, c echo.Context, responseErrorCode string) error {
 	reply, err := GetReponseMessageByCode(responseErrorCode)
 
 	if err != nil {
-		logs.Error().Err(err).Caller().Send()
+		logs.Error().Err(err).Caller().Msg("P-Request-ID : " + pRequestID + " server trace ID : " + serverTraceID)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
-	reply.ClientRequestID = clientRequestID
-	reply.ServerTraceID = serverTraceID
-
-	return c.JSON(http.StatusBadRequest, reply)
+	c.Response().Header().Set(ClientRequestID, pRequestID)
+	c.Response().WriteHeader(http.StatusInternalServerError)
+	return c.JSON(http.StatusInternalServerError, reply)
 }
