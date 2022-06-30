@@ -16,13 +16,17 @@ const (
 )
 
 const (
-	SuccessCode     = "S0000"
-	SystemErrorCode = "E1001"
+	SuccessCode       = "S0000"
+	SystemErrorCode   = "E1001"
+	SDSorUSCRateLimit = "E1002"
+	InvalidRequest    = "E1003"
 )
 
 var responseMessages = map[string]string{
-	SuccessCode:     "Success",
-	SystemErrorCode: "System Error",
+	SuccessCode:       "Success",
+	SystemErrorCode:   "System Error",
+	SDSorUSCRateLimit: "Rate Limit hit at SDS or USC",
+	InvalidRequest:    "Invalid request format or data",
 }
 
 var responseMap = &sync.Map{}
