@@ -16,17 +16,19 @@ const (
 )
 
 const (
-	SuccessCode       = "S0000"
-	SystemErrorCode   = "E1001"
-	SDSorUSCRateLimit = "E1002"
-	InvalidRequest    = "E1003"
+	SuccessCode             = "S0000" // should return http status code: 200
+	SystemErrorCode         = "E1001" // should return http status code: 200
+	SDSorUSCRateLimit       = "E1002" // should return http status code: 429
+	InvalidRequest          = "E1003" // should return http status code: 400
+	RequestFailedValidation = "E1004" // should return http status code: 400
 )
 
 var responseMessages = map[string]string{
-	SuccessCode:       "Success",
-	SystemErrorCode:   "System Error",
-	SDSorUSCRateLimit: "Rate Limit hit at SDS or USC",
-	InvalidRequest:    "Invalid request format or data",
+	SuccessCode:             "Success",
+	SystemErrorCode:         "System Error",
+	SDSorUSCRateLimit:       "Rate Limit Hit at SDS or USC",
+	InvalidRequest:          "Invalid Request Format or Data",
+	RequestFailedValidation: "Request Failed Validation",
 }
 
 var responseMap = &sync.Map{}
