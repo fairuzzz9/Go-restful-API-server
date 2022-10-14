@@ -12,8 +12,10 @@ import (
 
 // define your URL path here
 const (
-	PATH_HOME         = "/"
-	PATH_HEALTH_CHECK = "/healthcheck"
+	PATH_HOME                     = "/"
+	PATH_HEALTH_CHECK             = "/healthcheck"
+	PATH_LIST_CITIES              = "/cities"
+	PATH_LIST_CITIES_BY_COUNTRYID = "/citiesbycountryid/:id"
 )
 
 func InitRoutes(e *echo.Echo) {
@@ -23,7 +25,9 @@ func InitRoutes(e *echo.Echo) {
 	// route to handler
 	e.GET(PATH_HOME, handlers.Home)                // home.go
 	e.GET(PATH_HEALTH_CHECK, handlers.HealthCheck) // healthcheck.go
-
+	e.GET(PATH_LIST_CITIES, handlers.ListCities)
+	e.GET(PATH_LIST_CITIES, handlers.ListCities)
+	e.GET(PATH_LIST_CITIES_BY_COUNTRYID, handlers.ListCitiesByCountryId)
 	// Swagger docs route
 	e.GET("/docs/*", echoSwagger.WrapHandler)
 

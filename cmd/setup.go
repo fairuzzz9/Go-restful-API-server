@@ -5,17 +5,9 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
-	"github.com/ziflex/lecho"
-	"gitlab.com/pos_malaysia/golib/logs"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4/middleware"
-)
-
-var (
-	// configure the logger's behaviour here
-	logsConfig = logs.ConfigSet{}
-	logger     = logs.Configure(logsConfig)
 )
 
 type CustomValidator struct {
@@ -33,9 +25,6 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 func setupEcho() *echo.Echo {
 
 	e := echo.New()
-
-	// Setup Echo to use our logger
-	e.Logger = lecho.New(logger) // Echo adapter for Zerolog
 
 	e.Validator = &CustomValidator{validator: validator.New()}
 

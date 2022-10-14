@@ -10,10 +10,7 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {
-            "name": "Go Skeleton Rest APP Developer",
-            "email": "boojiun@pos.com.my"
-        },
+        "contact": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -45,12 +42,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.StandardJSONResponse"
-                        },
-                        "headers": {
-                            "string": {
-                                "type": "string",
-                                "description": "P-Request-Id"
-                            }
                         }
                     }
                 }

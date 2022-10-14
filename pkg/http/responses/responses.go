@@ -8,11 +8,7 @@ import (
 	"sync"
 
 	"github.com/labstack/echo/v4"
-	"gitlab.com/pos_malaysia/golib/logs"
-)
-
-const (
-	ClientRequestID = "P-Request-Id"
+	"github.com/labstack/gommon/log"
 )
 
 const (
@@ -64,11 +60,11 @@ func ResponseWithError(pRequestID, serverTraceID string, c echo.Context, respons
 	reply, err := GetReponseMessageByCode(responseErrorCode)
 
 	if err != nil {
-		logs.Error().Err(err).Caller().Msg("P-Request-Id : " + pRequestID + " server trace ID : " + serverTraceID)
+		errMsg := err.Error() + " server trace ID : " + serverTraceID
+		log.Error(errMsg)
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
-	c.Response().Header().Set(ClientRequestID, pRequestID)
 	c.Response().WriteHeader(http.StatusInternalServerError)
 	return c.JSON(http.StatusInternalServerError, reply)
 }

@@ -1,10 +1,10 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"gitlab.com/pos_malaysia/golib/logs"
 )
 
 func Home(c echo.Context) error {
@@ -15,7 +15,8 @@ func Home(c echo.Context) error {
 	//ctx := c.Request().Context()
 	//ctx = contextkeys.SetContextValue(ctx, contextkeys.CONTEXT_KEY_SERVER_TRACE_ID, serverTraceID)
 
-	logs.Info().Str("server request ID", serverTraceID).Str("handler", "Home").Send()
+	log.Println("home")
+	log.Println("server trace ID : " + serverTraceID)
 
 	return c.HTML(http.StatusOK, "<h1>home</h1>")
 }

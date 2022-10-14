@@ -3,10 +3,7 @@
     "info": {
         "description": "This is the Go Skeleton Rest APP",
         "title": "Go Rest Skeleton Rest APP",
-        "contact": {
-            "name": "Go Skeleton Rest APP Developer",
-            "email": "boojiun@pos.com.my"
-        },
+        "contact": {},
         "version": "1.0"
     },
     "host": "localhost:1234",
@@ -38,12 +35,6 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.StandardJSONResponse"
-                        },
-                        "headers": {
-                            "string": {
-                                "type": "string",
-                                "description": "P-Request-Id"
-                            }
                         }
                     }
                 }
