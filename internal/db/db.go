@@ -121,6 +121,9 @@ var sqlStatements = map[string]string{
 
 	"GetAllFromCities":     "SELECT city_name ,country_id FROM cities",
 	"GetCitiesByCountryID": "SELECT city_name,country_id FROM cities WHERE country_id = $1",
+	"CreateCity":           "INSERT INTO cities( city_name, country_id)VALUES($1, $2)",
+	"UpdateCity":           "UPDATE cities SET city_name=$1 WHERE city_id=$2",
+	"DeleteCity":           "DELETE FROM cities WHERE city_name=$1",
 }
 
 // InitSQLStatements initialize and populate the SQL statements map.

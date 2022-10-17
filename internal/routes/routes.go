@@ -16,6 +16,9 @@ const (
 	PATH_HEALTH_CHECK             = "/healthcheck"
 	PATH_LIST_CITIES              = "/cities"
 	PATH_LIST_CITIES_BY_COUNTRYID = "/citiesbycountryid/:id"
+	PATH_POST_CITY                = "/postcity/:city/:id"
+	PATH_PUT_CITY_BY_COUNTRYID    = "/updatecity/:city/:id"
+	PATH_DELETE_CITY_BY_CITYNAME  = "/deletecity/:city"
 )
 
 func InitRoutes(e *echo.Echo) {
@@ -28,6 +31,9 @@ func InitRoutes(e *echo.Echo) {
 	e.GET(PATH_LIST_CITIES, handlers.ListCities)
 	e.GET(PATH_LIST_CITIES, handlers.ListCities)
 	e.GET(PATH_LIST_CITIES_BY_COUNTRYID, handlers.ListCitiesByCountryId)
+	e.POST(PATH_POST_CITY, handlers.CreateCity)
+	e.PUT(PATH_PUT_CITY_BY_COUNTRYID, handlers.UpdateCity)
+	e.DELETE(PATH_DELETE_CITY_BY_CITYNAME, handlers.DeleteCity)
 	// Swagger docs route
 	e.GET("/docs/*", echoSwagger.WrapHandler)
 

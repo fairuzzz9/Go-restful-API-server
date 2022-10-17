@@ -119,3 +119,154 @@ func ListCitiesByCountryId(c echo.Context) error {
 	c.Response().WriteHeader(http.StatusOK)
 	return c.JSON(http.StatusOK, reply)
 }
+
+func CreateCity(c echo.Context) error {
+
+	id := c.Param("id")
+	city := c.Param("city")
+
+	reply, err := responses.GetReponseMessageByCode(responses.SuccessCode)
+
+	if err != nil {
+
+		// override the reply message with the error message
+		reply.Message = "GetReponseMessageByCode(responses.SuccessCode) error : " + err.Error()
+
+		c.Response().WriteHeader(http.StatusInternalServerError)
+		return c.JSON(http.StatusInternalServerError, reply)
+	}
+
+	// todo: create city to database
+	ctx := context.Background()
+	conn, _ := db.DBPool().Acquire(ctx)
+
+	defer conn.Release()
+
+	var cities []CityData
+	rows, err := conn.Query(context.Background(), db.GetSQLByName("CreateCity"), city, id)
+	if err != nil {
+
+		reply.Message = "error : " + err.Error()
+
+		c.Response().WriteHeader(http.StatusInternalServerError)
+		return c.JSON(http.StatusInternalServerError, reply)
+
+	}
+
+	for rows.Next() {
+		var city CityData
+		err := rows.Scan(&city.CityName, &city.CountryID)
+		if err != nil {
+			fmt.Println(err)
+		}
+		cities = append(cities, city)
+	}
+
+	// override the success message
+	reply.Message = reply.Message + ". The city has been added to database"
+	reply.Data = cities
+
+	c.Response().WriteHeader(http.StatusOK)
+	return c.JSON(http.StatusOK, reply)
+}
+
+func UpdateCity(c echo.Context) error {
+
+	id := c.Param("id")
+	city := c.Param("city")
+
+	reply, err := responses.GetReponseMessageByCode(responses.SuccessCode)
+
+	if err != nil {
+
+		// override the reply message with the error message
+		reply.Message = "GetReponseMessageByCode(responses.SuccessCode) error : " + err.Error()
+
+		c.Response().WriteHeader(http.StatusInternalServerError)
+		return c.JSON(http.StatusInternalServerError, reply)
+	}
+
+	// todo: create city to database
+	ctx := context.Background()
+	conn, _ := db.DBPool().Acquire(ctx)
+
+	defer conn.Release()
+
+	var cities []CityData
+	rows, err := conn.Query(context.Background(), db.GetSQLByName("UpdateCity"), city, id)
+	if err != nil {
+
+		reply.Message = "error : " + err.Error()
+
+		c.Response().WriteHeader(http.StatusInternalServerError)
+		return c.JSON(http.StatusInternalServerError, reply)
+
+	}
+
+	for rows.Next() {
+		var city CityData
+		err := rows.Scan(&city.CityName, &city.CountryID)
+		if err != nil {
+			fmt.Println(err)
+		}
+		cities = append(cities, city)
+	}
+
+	// override the success message
+	reply.Message = reply.Message + ". The city has been updated to database"
+	reply.Data = cities
+
+	c.Response().WriteHeader(http.StatusOK)
+	return c.JSON(http.StatusOK, reply)
+
+}
+
+func DeleteCity(c echo.Context) error {
+
+	city := c.Param("city")
+
+	reply, err := responses.GetReponseMessageByCode(responses.SuccessCode)
+
+	if err != nil {
+
+		// override the reply message with the error message
+		reply.Message = "GetReponseMessageByCode(responses.SuccessCode) error : " + err.Error()
+
+		c.Response().WriteHeader(http.StatusInternalServerError)
+		return c.JSON(http.StatusInternalServerError, reply)
+	}
+
+	// todo: create city to database
+	ctx := context.Background()
+	conn, _ := db.DBPool().Acquire(ctx)
+
+	defer conn.Release()
+
+	var cities []CityData
+	rows, err := conn.Query(context.Background(), db.GetSQLByName("DeleteCity"), city)
+	if err != nil {
+
+		reply.Message = "error : " + err.Error()
+
+		c.Response().WriteHeader(http.StatusInternalServerError)
+		return c.JSON(http.StatusInternalServerError, reply)
+
+	}
+
+	for rows.Next() {
+		var city CityData
+		err := rows.Scan(&city.CityName, &city.CountryID)
+		if err != nil {
+			fmt.Println(err)
+		}
+		cities = append(cities, city)
+	}
+
+	// override the success message
+	reply.Message = reply.Message + ". The city has been deleted from database"
+	reply.Data = cities
+
+	c.Response().WriteHeader(http.StatusOK)
+	return c.JSON(http.StatusOK, reply)
+
+}
